@@ -4,5 +4,4 @@ const dino = {
   createComponent,
   contextProvider,
 };
-
 module.exports = dino;

@@ -1,5 +1,5 @@
-import dependencies from "./dependencies";
-import { contextProvider } from "./provider";
+const dependencies = require ("./dependencies");
+const { contextProvider } =require ("./provider");
 
 const createComponent = (componentFn) => {
   class DinoCompoennt {
