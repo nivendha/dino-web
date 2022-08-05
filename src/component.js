@@ -19,7 +19,7 @@ const createComponent = (componentFn) => {
           isStateChanged = true;
           this.state = newState;
           cbFn && cbFn(this.state);
-          window.requestAnimationFrame(this.#doRender);
+          window.requestAnimationFrame(()=>this.#doRender());
         }
       } else if (this.#checkRerender) {
         this.#reRender();
@@ -32,7 +32,7 @@ const createComponent = (componentFn) => {
       this.state = null;
       //   this.$children = [];
       this.#reRender = reRender;
-      window.requestAnimationFrame(this.#doRender);
+      window.requestAnimationFrame(()=>this.#doRender());
     }
     renderChildren(childrenArray) {
       if (Array.isArray(childrenArray)) {
@@ -70,10 +70,10 @@ const createComponent = (componentFn) => {
         this.#config.init.apply(null, [this.comp.context]);
       this.#isInitaled = true;
       if (this.#config.beforeRender) {
-        this.#config.beforeRender.apply(this.comp, []);
+        this.#config.beforeRender.apply(this.comp, [this.comp]);
       }
       this.comp.props = { ...props };
-      this.#dom = this.#config.render.apply(this.comp, []);
+      this.#dom = this.#config.render.apply(this.comp, [this.comp]);
       return this;
     }
     getDom() {
@@ -83,13 +83,13 @@ const createComponent = (componentFn) => {
       return this.#dom;
     }
     reRender(forceRenrender) {
-      this.#config.render.apply(this.comp, []);
-      this.#config.afterUpdate.apply(this.comp, []);
+      this.#config.render.apply(this.comp, [this.comp]);
+      this.#config.afterUpdate.apply(this.comp, [this.comp]);
     }
   }
 
   const dinoCompoennt = new CompoenntBuilder(componentFn(dependencies));
-  return dinoCompoennt.build;
+  return dinoCompoennt.build.bind(dinoCompoennt);
 };
 
 module.exports = createComponent;

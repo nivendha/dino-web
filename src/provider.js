@@ -1,9 +1,9 @@
 module.exports = {
-  contextProvider: () => {
+  contextProvider: (() => {
     const context = {};
     return {
       createContext: (ctx) => (context = ctx),
       getContext: () => context,
     };
-  },
+  })(),
 };
