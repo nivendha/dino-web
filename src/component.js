@@ -37,7 +37,8 @@ const createComponent = (componentFn) => {
     renderChildren(childrenArray) {
       if (Array.isArray(childrenArray)) {
         return childrenArray.reduce((acc, compBuildFn) => {
-          acc = acc + compBuildFn(this).getDom();
+          acc = acc + compBuildFn.getDom();
+          return acc
         }, "");
       }
     }
