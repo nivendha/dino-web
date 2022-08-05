@@ -2,11 +2,14 @@ const path = require("path");
 
 module.exports = {
   mode: "development",
+  devtool: 'source-map',
   target: ["web"],
   entry: "./src/index.js",
+  entry: {
+    'bundle': ['/src/public/app.js', '/src/index.js'],
+  },
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "dino.bundle.js",
+    filename: '[name].js'
   },
   module: {
     rules: [
